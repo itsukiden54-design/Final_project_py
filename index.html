@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Airline Delay Prediction</title>
+
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+
+    <div class="logo">
+      ✈ AIRLINE DELAY PREDICTION
+    </div>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#predict">Predict</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#about">About</a>
+
+      <button
+        type="button"
+        class="reset-btn"
+        onclick="resetDashboard()"
+      >
+        Reset
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+
+    <div class="hero-left">
+
+      <p class="badge">
+        MACHINE LEARNING AIRLINE SYSTEM
+      </p>
+
+      <h1>
+        Predict Airline Delays
+        Before They Happen
+      </h1>
+
+      <p class="hero-text">
+        Smart airline analytics powered by
+        Machine Learning and Real-Time Data.
+      </p>
+
+      <a href="#predict" class="hero-btn">
+        Start Prediction
+      </a>
+
+    </div>
+
+    <div class="hero-card">
+
+      <div class="plane">
+        ✈
+      </div>
+
+      <h3>
+        Live Flight Analytics
+      </h3>
+
+      <p>
+        AI Delay Risk Scanner
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- INFO -->
+  <section class="info-grid">
+
+    <div class="info-card">
+      <h3>The Problem</h3>
+
+      <p>
+        Airline delays affect airports,
+        passengers, and airline companies.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <h3>Machine Learning</h3>
+
+      <p>
+        Our AI model predicts delays
+        using operational airline data.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <h3>Real-Time Analytics</h3>
+
+      <p>
+        Visualize predictions instantly
+        using a live analytics dashboard.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- PREDICTION -->
+  <section id="predict" class="predict-section">
+
+    <div class="predict-card">
+
+      <div class="predict-header">
+
+        <div>
+          <h2>Flight Delay Prediction</h2>
+          <p>Enter airline operational data below.</p>
+        </div>
+
+        <span class="predict-badge">
+          LIVE MODEL
+        </span>
+
+      </div>
+
+      <form id="predictionForm">
+
+        <input id="year" type="number" placeholder="Year" required/>
+
+        <input id="month" type="number" placeholder="Month" required/>
+
+        <input id="arr_flights" type="number" placeholder="Arrival Flights" required/>
+
+        <input id="carrier_ct" type="number" placeholder="Carrier Delay Count" required/>
+
+        <input id="weather_ct" type="number" placeholder="Weather Delay Count" required/>
+
+        <input id="nas_ct" type="number" placeholder="NAS Delay Count" required/>
+
+        <input id="security_ct" type="number" placeholder="Security Delay Count" required/>
+
+        <input id="late_aircraft_ct" type="number" placeholder="Late Aircraft Count" required/>
+
+        <input id="arr_cancelled" type="number" placeholder="Arrival Cancelled" required/>
+
+        <input id="arr_diverted" type="number" placeholder="Arrival Diverted" required/>
+
+        <button type="submit">
+          Predict Delay
+        </button>
+
+      </form>
+
+      <div id="result"></div>
+
+    </div>
+
+  </section>
+
+  <!-- ANALYTICS -->
+  <section id="analytics" class="analytics-section">
+
+    <div class="analytics-top">
+
+      <div>
+        <p class="analytics-label">
+          LIVE FLIGHT INSIGHTS
+        </p>
+
+        <h2>
+          Analytics Dashboard
+        </h2>
+      </div>
+
+      <div class="live-status">
+        ● LIVE
+      </div>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <p>Total Predictions</p>
+        <h3 id="totalPredictionValue">0</h3>
+        <span>All submitted flights</span>
+      </div>
+
+      <div class="stat-card danger">
+        <p>Delayed Flights</p>
+        <h3 id="delayedValue">0</h3>
+        <span id="delayRate">0% delay rate</span>
+      </div>
+
+      <div class="stat-card success">
+        <p>On-Time Flights</p>
+        <h3 id="notDelayedValue">0</h3>
+        <span id="notDelayRate">0% on-time rate</span>
+      </div>
+
+      <!-- RISK -->
+      <div class="stat-card risk-stat">
+
+        <div class="risk-top">
+
+          <div>
+            <p class="risk-label">
+              Average Risk Score
+            </p>
+
+            <span class="risk-subtitle">
+              AI Risk Analysis
+            </span>
+          </div>
+
+          <div class="risk-icon">
+            ⚡
+          </div>
+
+        </div>
+
+        <div class="risk-main">
+
+          <h3 id="avgRiskValue">0</h3>
+
+          <div class="mini-progress">
+            <div id="avgRiskBar" class="mini-progress-fill"></div>
+          </div>
+
+          <small id="riskLevelText">
+            Low Risk
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CONTENT -->
+    <div class="analytics-content">
+
+      <!-- BREAKDOWN -->
+      <div class="card-dark">
+
+        <h3>
+          Delay Cause Breakdown
+        </h3>
+
+        <div class="breakdown-list">
+
+          <div class="breakdown-row">
+
+            <div class="breakdown-header">
+              <span>Carrier Delay</span>
+              <small id="carrierValue">0</small>
+            </div>
+
+            <div class="progress-bg">
+              <div id="carrierBar" class="progress-fill"></div>
+            </div>
+
+          </div>
+
+          <div class="breakdown-row">
+
+            <div class="breakdown-header">
+              <span>Weather Delay</span>
+              <small id="weatherValue">0</small>
+            </div>
+
+            <div class="progress-bg">
+              <div id="weatherBar" class="progress-fill"></div>
+            </div>
+
+          </div>
+
+          <div class="breakdown-row">
+
+            <div class="breakdown-header">
+              <span>NAS Delay</span>
+              <small id="nasValue">0</small>
+            </div>
+
+            <div class="progress-bg">
+              <div id="nasBar" class="progress-fill"></div>
+            </div>
+
+          </div>
+
+          <div class="breakdown-row">
+
+            <div class="breakdown-header">
+              <span>Security Delay</span>
+              <small id="securityValue">0</small>
+            </div>
+
+            <div class="progress-bg">
+              <div id="securityBar" class="progress-fill"></div>
+            </div>
+
+          </div>
+
+          <div class="breakdown-row">
+
+            <div class="breakdown-header">
+              <span>Late Aircraft</span>
+              <small id="lateAircraftValue">0</small>
+            </div>
+
+            <div class="progress-bg">
+              <div id="lateAircraftBar" class="progress-fill"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RISK LEVEL -->
+      <div class="card-dark risk-card">
+
+        <h3>
+          Delay Risk Level
+        </h3>
+
+        <div class="risk-circle">
+          <span id="riskPercent">0%</span>
+        </div>
+
+        <p id="riskText">
+          Low delay risk
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+
+    <h2>
+      About This Project
+    </h2>
+
+    <p>
+      Airline Delay Prediction is a machine learning
+      powered system that forecasts flight delays
+      using operational airline data and live analytics.
+    </p>
+
+  </section>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
